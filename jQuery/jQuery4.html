@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jQuery学习</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js">//cdn加速器</script>
+    <script>
+        //内部代码在DOM加载完后执行，相当于window.addEventListener('load',function(){})
+        $(document).ready(function(){
+            //alert($('#div1').attr('id'));
+        })
+        $(function(){
+            //alert($('#div1').attr('id'));
+            //$('#div1').attr('class','cde');   //访问DOM的节点
+            //$('#div1').prop('className','cde');  //访问DOM的属性
+
+            //$('.abc').attr('class','efg');//修改
+            var a=$('<button>我是jQuery生成的</button>');
+            $('#div1').append(a);
+            a.text('我再次生成');
+
+            var count=0;
+            var n=setInterval(function(){
+                var b=$('<img src="img/sea41.jpg" style="position: absolute; width: 200px; height: 200px"/>');
+                $('#div2').append(b);
+                //var left=Math.random()*500;
+                //var top=Math.random()*500;
+                //b.css({left:left,top:top});
+
+                setInterval(function(){
+                    var left=Math.random()*($(window).innerWidth()-314);
+                    var top=Math.random()*($(window).innerHeight()-208);
+                    b.animate({left:left+'px',top:top+'px'},500);
+                },500);
+
+                count++;
+                if(count>=10){
+                    clearInterval(n);
+                }
+                b.click(function(){
+                    $(this).fadeOut();
+                });
+            },1000);
+
+
+        })
+
+    </script>
+</head>
+<body>
+    <div id="div1" class="abc"></div>
+    <div id="div2" class="abc"></div>
+    <div id="div3"></div>
+</body>
+</html>

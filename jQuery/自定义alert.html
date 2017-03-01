@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>弹出窗口alert</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+//            var alert=function(str){
+//                var modal=$('<div style="position: absolute;left: 0;top: 0; background: rgba(0,0,0,0.2); z-index: 100"></div>');
+//                modal.css('width',$(window).innerWidth()+'px');
+//                modal.css('height',$(window).innerHeight()+'px');
+//                $('body').append(modal);
+//                var div=$('<div style="background: #fff; margin: 20px auto;; width: 400px; height: 200px;"></div>');
+//                modal.append(div);
+//                var txt=$('<p style="text-align: center"></p>');
+//                div.append(txt);
+//                var btn=$('<button style="width:80px; height:40px; background:lightblue; border: none;">确定</button>');
+//                btn.css({position:'relative',left:'160px',top:'150px'})
+//                div.append(btn);
+//                btn.on('click',function(){
+//                    modal.remove();
+//                });
+//                txt.text(str);
+//            };
+//            var a=12;
+//            alert(a);
+            var alert=function(msg,callback){
+                var modal=$('<div style="position:absolute;top:0px;left:0px;z-index:100;background-color:rgba(0,0,0,0.2);"></div>');
+                modal.css('width',$(document).innerWidth()+'px');
+                modal.css('height',$(document).innerHeight()+'px');
+
+                var div=$('<div style="text-align:center;background-color:#fff;border-radius:5px;height:100px;width:200px;margin:0 auto;"></div>');
+                modal.append(div);
+                div.css('margin-top',$(document).scrollTop()+100+'px');
+                var div2=$('<div style="width: 200px; height: 30px; background: dodgerblue;"></div>');
+                div.append(div2);
+                var text=$('<div style="height:170px;">'+msg+'</div>')
+                div.append(text);
+
+                var btn=$('<button style="border: none;background:lightblue;width: 70px; height: 40px; text-align: center">关闭</button>')
+                btn.css({position:'relative',left:'80px;',top:'-120px'})
+                div.append(btn);
+                btn.on('click',function(){
+                    modal.remove();
+                    //callback();
+                });
+                $('body').append(modal);
+                setTimeout(function(){
+                    alert('这是我自定义的');
+                },3000);
+            };
+            alert(12);
+
+        });
+    </script>
+</head>
+<body>
+    <p>23554</p>
+</body>
+</html>

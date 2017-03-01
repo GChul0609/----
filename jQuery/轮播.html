@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片轮播</title>
+    <style>
+        *{ margin: 0 auto; padding: 0}
+        #container{ width: 1000px; height: 300px; position: relative; overflow: hidden; border: 1px solid red}
+        #container ul{ width: 2000px; position: absolute; list-style: none;}
+        #container ul li{float: left; padding-left: 40px;}
+        img{ width: 200px; height: 150px; margin-top: 40px;}
+
+        #container .solid{ width: 100px; position: absolute; left:469px;  top: 250px;}
+        #container span{ display: inline-block; background: #ff99ff;
+                          border-radius: 50%; width: 30px; height: 30px;}
+        #container .choose{ background: orange}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul id="oul">
+                <li><img src="img/a.jpg"/></li>
+                <li><img src="img/b.jpg"/></li>
+                <li><img src="img/c.jpg"/></li>
+                <li><img src="img/d.jpg"/></li>
+
+                <li><img src="img/sea41.jpg"/></li>
+                <li><img src="img/sea51.jpg"/></li>
+                <li><img src="img/sea55.jpg"/></li>
+                <li><img src="img/sea71.jpg"/></li>
+        </ul>
+        <div class="solid">
+            <span class="choose"></span>
+            <span></span>
+        </div>
+    </div>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+        $('.solid span').click(function(){
+            var index=$(this).index();
+            $(this).addClass('choose').siblings().removeClass('choose');
+            $('#oul').animate({"left":-index*960},200);
+        });
+        var current=0;
+        var timer;
+        $('#container').hover(function(){
+            clearInterval(timer);
+        },function(){
+            timer=setInterval(function(){
+                if(current<$('.solid span').length-1){
+                    current++;
+                }else{
+                    current=0;
+                }
+                $('.solid span').eq(current).addClass('choose').siblings().removeClass('choose');
+                $('#oul').animate({"left":-960*current},200);
+            },1500);
+        })
+    </script>
+</body>
+</html>

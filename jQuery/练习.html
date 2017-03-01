@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jQuery练习</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        //在页面中创建一个图片；设置图片的边框1px，红色；
+        // 在3s后将该图片替换成另一张图片；点击图片后，该图片先消失，再出现；双击图片，该图片变动到随机位置
+        $(function() {
+            var img = $('<img src="img/sea51.jpg"style="width:200px; height:200px; position: absolute;"/>');
+            $('body').append(img);
+            img.css({border: '1px solid red'})
+            var timer = setInterval(function () {
+                 img.attr('src','img/sea41.jpg');
+            }, 3000);
+            img.click(function(){
+                $(this).fadeOut(function(){
+                    $(this).fadeIn();
+                });
+            });
+            img.dblclick(function(e){
+                img.stop(true);//停止前面所有的动画
+                img.css({opacity:1});
+                var left=Math.random()*($(window).innerWidth()-314);
+                var top=Math.random()*($(window).innerHeight()-208);
+                img.css({left:left,top:top});
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

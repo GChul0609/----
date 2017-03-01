@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>方法</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <button id="btn"">点我</button>
+    <div id="div" style="width: 100px; height: 100px; background: pink; border-radius: 50%; position: absolute"></div>
+    <div id="div2" style="background: deeppink; width: 100px; height: 100px; position: absolute;top: 200px; opacity: 0.1"></div>
+    <script>
+        function person(options){
+            this.sex='女';
+            this.name='aa';
+            $.extend(this,options);
+        }
+        var a=new person({name:'qq',height:170});
+        //alert(a.height);
+
+        $.fn.haha=function(){
+            //alert('haha');
+            $(this).css({'background':'red',border:'none'});
+        }
+        $('#btn').haha();
+
+        $.fn.extend({
+            toGreen:function(){
+                $(this).css('background','green');
+            },
+            toBlue:function(){
+                $(this).css('background','blue');
+            },
+            toFly:function(){
+                $(this).animate({left:400,opacity:0.5,borderRadius:'0%'},400)
+                        .animate({left:400,top:400,opacity:1,borderRadius:'50%'},400)
+                        .animate({left:0,top:400,opacity:0.5,borderRadius:'0%'},400)
+                        .animate({left:0,top:30,opacity:1,borderRadius:'50%'},400)
+            }
+        });
+        $('#div').toFly();
+
+        //扩展jQuery方法，方法名：flash；改变该元素的透明度，快速自动变化；方法名：stopFlash；停止该动画
+        $.fn.extend({
+               timer:0,
+                flash:function(){
+                    timer=setInterval(function(){
+                        $('#div2').animate({opacity:0.2},100)
+                                    .animate({opacity:0.4},100)
+                                    .animate({opacity:0.6},100)
+                                    .animate({opacity:0.8},100)
+                                    .animate({opacity:1},100)
+                    },500);
+                }
+        });
+        $('#div2').flash();
+        function stopFlash(){
+            clearInterval(timer);
+            $('#div2').stop(true);
+        }
+        $('#btn').on('click',stopFlash);
+    </script>
+</body>
+</html>

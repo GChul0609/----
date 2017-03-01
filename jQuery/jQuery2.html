@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jQuery菜单</title>
+    <style>
+        *{ margin: 0; padding: 0; font-family: '微软雅黑'; font-size: 18px; cursor: pointer}
+
+        .nav{ background: #303030; color: #fff; width: 100%; height: 40px;
+               overflow: hidden; position: relative;}
+
+        .nav span{ display: inline-block; background: #38f;
+                    height: 4px; width: 110px; position: absolute;}
+
+        .nav ul li{ width: 110px; float: left; margin-left: 10px; list-style: none;}
+
+        .menu{ float:left; overflow: hidden;
+               width: 300px; height:600px;
+               background: #303030; color: #fff;}
+
+        .menu ul li{ width: 200px; float: left; font-size: 20px; font-weight: bold}
+
+        .menu ul li ul li{ margin-left: 30px; list-style: none; font-size: 16px; color: gainsboro}
+
+        .menu-btn{ width: 100px; height: 40px; background: #38f;
+                    color:#fff; float: left; left: 300px;}
+
+        #container{ width: 600px; height: 500px; position: relative; overflow: hidden;}
+        #container ul{ width: 2400px; position: absolute;}
+        #container ul li{ width: 600px; float: left; list-style: none;}
+        #container ul li img{ width: 600px;}
+
+        #container .hd{
+            width:150px; position: absolute; top:230px;
+        }
+        #container .hd span{
+            margin-left:3px;
+            display: inline-block; width:20px; height:20px; border-radius: 50%; background: cornflowerblue;
+        }
+        #container .hd span.choose{background:pink;}
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <span></span>
+        <ul>
+            <li class="select">首页</li>
+            <li>企业文化</li>
+            <li>热门产品</li>
+            <li>企业历史</li>
+            <li>在线客服</li>
+            <li>联系我们</li>
+        </ul>
+    </div>
+
+    <div class="menu">
+        <ul class="one">
+            <li>女装
+                <ul class="two">
+                    <li>大衣</li>
+                    <li>针织衫</li>
+                    <li>卫衣</li>
+                </ul>
+            </li>
+            <li>童装
+                <ul class="two">
+                    <li>外套</li>
+                    <li>潮装</li>
+                    <li>童鞋</li>
+                </ul>
+            </li>
+            <li>男装
+                <ul class="two">
+                    <li>外套</li>
+                    <li>西装</li>
+                    <li>毛衣</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="menu-btn">收起</div>
+    <div id="container">
+        <ul id="caro">
+            <li><img src="img/a.jpg"/></li>
+            <li><img src="img/b.jpg"/></li>
+            <li><img src="img/c.jpg"/></li>
+            <li><img src="img/d.jpg"/></li>
+        </ul>
+        <div class="hd">
+            <span class="choose"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+        $('.one>li').click(function(){
+            $(this).children('ul').slideDown();
+            $(this).siblings().children('ul').slideUp();
+        });
+        $('#get').text('hello');
+        $('.nav ul li').hover(function(){
+            //获取当前hover的li索引值
+            var index = $(this).index();
+            //将span蓝色条纹动画移动到指定位置
+            $('.nav span').stop().animate({"left":120*index}, 200)
+            //当鼠标移除li的时候
+        },function(){
+                //找到span应该停止的位置  循环ul li
+                $('.nav ul li').each(function(){
+                    if($(this).hasClass('select')){
+                        var index=$(this).index();
+                        $('.nav span').stop().animate({"left":120*index},200);
+                    }
+                });
+        })
+        var isOpen=true;
+        $('.menu-btn').click(function(){
+            if(isOpen){
+                $(this).text('展开');//.text 不带参数，获取；带参数，改变
+                isOpen=!isOpen;
+                $('.menu').animate({"margin-left":-300},500);
+            }else{
+                $(this).text('收起');
+                isOpen=!isOpen;
+                $('.menu').animate({"margin-left":0},1000);
+            };
+        });
+        //1、给4个小圆点添加点击事件 click
+        //2、获取当前点击的小圆点的索引值
+        //3、给当前点击的小圆点加上choose
+        //4、给它同级元素的小圆点移除choose
+        //5、把ul的位置移动到animate
+        $('.hd span').click(function(){
+            var index=$(this).index();
+            $(this).addClass('choose').siblings().removeClass('choose');
+            $('#caro').animate({"left":-index*600},200);
+        })
+        //当前播放的张数
+        var current=0;
+        var timer;
+        $('#container').hover(function(){
+            clearInterval(timer);
+        },function(){
+            timer=setInterval(function(){
+                if(current<$('.hd span').length-1){
+                    current++;
+                }else{
+                    current=0;
+                };
+                $('.hd span').eq(current).addClass('choose').siblings().removeClass('choose');
+                $('#caro').animate({"left":-600*current},200);
+            },1000);
+        }).trigger('mouseleave');// trigger()函数用于在每个匹配元素上触发指定类型的事件
+
+    </script>
+</body>
+</html>

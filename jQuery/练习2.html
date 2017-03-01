@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>练习2</title>
+    <style>
+        .btn{ width:100px; height: 40px; background: pink; color: #ffffff;
+              line-height: 40px; text-align: center}
+
+        .bb{ overflow: hidden; zoom: 1; padding: 0;}
+        .bb>li{ float: left; list-style: none; display: inline-block; padding: 8px 20px; font-size: 14px;
+                font-weight: bold; color: #ffffff; background: #337ab7; border: 1px solid #2e6da4;
+                box-shadow: 2px 2px 2px #ccc; cursor: pointer}
+
+        .bb>li:first-child{ border-radius: 5px 0 0 5px;}
+        .bb>li:last-child{ border-radius: 0px 5px 5px 0}
+        .bb>.choose{ background:blue; border:1px solid gray}
+    </style>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            setTimeout(function(){
+                //$('#p').attr('checked','checked');
+                $('#p').prop('checked',false);
+            },1500);
+
+            $('#div1').css({backgroundColor:'red',border:'1px solid blue',borderRadius:'50%',width:'100px',height:'100px'});
+
+            setInterval(function(){
+                $('#a').toggleClass('btn');
+            },1000);
+
+//            $('.bb').each(function(){
+//                $('.bb').children('li').click(function(){
+//                    $(this).addClass('choose').siblings().removeClass('choose');
+//                });
+//            });
+
+//            $('.bb li').click(function(){
+//                $('.bb li').each(function(){
+//                    $(this).removeClass('choose');
+//                });
+//                $(this).addClass('choose')
+//            });
+
+            $('.bb li').click(function(){
+                $('.bb li').removeClass('choose');
+                $(this).addClass('choose')
+            });
+        });
+    </script>
+</head>
+<body>
+    <input id="p" type="checkbox" value="1" checked="checked"/>
+    <div id="div1"></div>
+    <div id="a" class="aaa">hello word</div>
+
+    <ul class="bb">
+        <li data="#div" class="current">1</li>
+        <li data="#div2">2</li>
+        <li data="#div3">3</li>
+    </ul>
+    <div id="div" style="">11</div>
+    <div id="div2" style="display: none">22</div>
+    <div id="div3" style="display: none">33</div>
+
+    <ul class="bb">
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+</body>
+</html>

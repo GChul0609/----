@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三级联动</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var data=[
+                {name:'湖南',children:[
+                    {name:'长沙',children:[
+                        {name:'岳麓区'},
+                        {name:'开福区'},
+                        {name:'芙蓉区'}
+                    ]},
+                    {name:'株洲'},
+                    {name:'湘潭',children:[
+                        {name:'雨湖区'},
+                        {name:'岳塘区'},
+                        {name:'湘潭县'}
+                    ]}
+                ]},
+                {name:'湖北'}
+            ];
+
+            setData('#provice',data);//调用
+
+            $('#provice').on('change',function(){
+                setData('#city',$(this).find("option:selected").prop('childData'));//option:selected 被选中
+                $('#city').change();
+            });
+
+            $('#city').on('change',function(){
+                setData('#area',$(this).find("option:selected").prop('childData'));
+            });
+
+            $('#provice').change();
+
+
+            function setData(id,data){   //data局部变量，并不是前面的var data
+                //获取select元素
+                var ele=$(id);
+                //清空
+                ele.empty();
+                //如果没有数据，直接返回
+                if(!data){
+                    return;
+                }
+                //循环显示option
+                for(var i=0;i<data.length;i++){
+                    var option=$('<option>'+data[i].name+'</option>');
+                    //利用prop存储子下拉数据 ****
+                   option.prop('childData',data[i].children);
+                    ele.append(option);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    省<select id="provice">
+    </select>
+    市<select id="city">
+    </select>
+    区<select id="area">
+    </select>
+</body>
+</html>

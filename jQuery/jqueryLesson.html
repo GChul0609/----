@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery学习</title>
+    <style>
+        *{margin:0px; padding:0px; font-family: "Microsoft YaHei"; font-size: 16px;}
+        .nav{
+            overflow: hidden; position:relative;
+            background:#303030; color:#fff; width:100%;height:40px;
+        }
+        .nav span{
+            height:4px; width:110px; position:absolute;
+            display: inline-block; background:#38f
+        }
+        .nav ul li{
+            width:110px; float:left; margin-left:10px;
+        }
+        .menu{float:left;overflow:hidden;width:300px; height:600px; background:#303030; color:#fff;}
+        .menu ul li{
+            width:200px; list-style: none; float: left;
+        }
+        .menu ul li ul li{
+            margin-left:30px;
+        }
+        .menu-btn{
+            width:100px; height:40px; background:#38f;
+            color:#fff; float:left; left:300px;
+        }
+        .slide{
+            width:1000px; overflow: hidden; position: relative; height:430px;
+        }
+        .slide ul{ width: 3000px; position:absolute; height:400px;}
+        .slide ul li{
+            width:1000px; float:left;
+        }
+        .slide ul li img{
+            width:1000px;
+        }
+        .slide .hd{
+            width:100px; position: absolute; top:400px;
+        }
+        .slide .hd span{
+            margin-left:3px;
+            display: inline-block; width:20px; height:20px; border-radius: 50%; background: red;
+        }
+
+        .slide .hd span.choose{background: #ffee00;}
+    </style>
+</head>
+<body>
+<div class="nav">
+    <span></span>
+    <ul>
+        <li class="select">网站首页</li>
+        <li>企业文化</li>
+        <li>人才招聘</li>
+        <li>联系方式</li>
+        <li>产品介绍</li>
+    </ul>
+</div>
+<div class="menu">
+    <ul class="one">
+        <li>女装
+            <ul class="two">
+                <li>外套</li>
+                <li>大衣</li>
+                <li>针织衫</li>
+            </ul>
+        </li>
+        <li>男装
+            <ul class="two">
+                <li>外套</li>
+                <li>大衣</li>
+                <li>针织衫</li>
+            </ul>
+        </li>
+        <li>童装
+            <ul class="two">
+                <li>女童装</li>
+                <li>男童装</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="menu-btn">收起</div>
+<div class="slide">
+    <ul id = "slide-con">
+        <li><img src="1.jpg"> </li>
+        <li><img src="2.jpg"> </li>
+        <li><img src="3.jpg"> </li>
+    </ul>
+    <div class="hd">
+        <span class="choose"></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+
+<script src="jquery-1.9.1.min.js"></script>
+<script>
+    //第一步 给三个小圆点添加点击事件 click
+    $(".hd span").click(function(){
+    //第二步获取当前点击的小圆点的索引值
+        var index = $(this).index();
+     //第三步给当前点击的小圆点加上choose $("").addClass("choose")
+        $(this).addClass("choose").siblings().removeClass("choose");
+    //第四步给他同级元素的小圆点移除choose .removeClass("choose")
+    //第五步把 ul的位置移动到animate（{left:-index*li的宽度}，200）
+        $("#slide-con").animate({left:-index*1000},500)
+    })
+    //当前播放的张数
+    var current = 0;
+    //自动播放
+    var timer;
+    $(".slide").hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(function(){
+            if(current < $(".hd span").length -1){
+                current++
+            }else current = 0;
+            $(".hd span").eq(current).addClass("choose").siblings().removeClass("choose");
+            $("#slide-con").animate({left:-1000 * current},500)
+        },3000)
+    }).trigger("mouseleave");
+
+
+
+    /*
+    var current = 0;
+    $(".hd span").click(function(){
+        $(this).addClass("choose").siblings().removeClass("choose");
+        $("#slide-con").stop().animate({"left":-1000*$(this).index()},500)
+    })
+    var timer;
+    $(".slide").hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(function(){
+            if(current < $("#slide-con li").length - 1){
+                current++;
+            }else{
+                current = 0;
+            }
+            $(".hd span").eq(current).addClass("choose").siblings().removeClass("choose");
+            $("#slide-con").stop().animate({"left":-1000*current},500)
+        },3000);
+    }).trigger('mouseleave');*/
+
+    $(".one>li").click(function(){
+        $(this).children("ul").slideDown();
+        $(this).siblings().children("ul").slideUp();
+    });
+    $('#get').text("hello");
+    $(".nav ul li").hover(function(){
+        //获取当前hover的li的索引值
+        var index = $(this).index();
+        console.log(index);
+        //将span蓝色条纹动画移动到指定位置
+        $(".nav span").stop().animate({"left":120 * index},200)
+    //当鼠标移出li的时候
+    },function(){
+        //找到span应该停止的位置
+        //循环ul li
+        $(".nav ul li").each(function(){
+            //如果存在select
+            if($(this).hasClass("select")){
+                var index = $(this).index();
+                //加上动画
+                $(".nav span").stop().animate({"left":120 * index},200)
+            }
+        })
+    })
+    var isOpen = true
+    $(".menu-btn").click(function(){
+        if(isOpen){
+            $(this).text("展开");
+            isOpen = !isOpen;
+            $(".menu").animate({"margin-left":-300},200)
+        }else {
+            $(this).text("收起");
+            isOpen = !isOpen;
+            $(".menu").animate({"margin-left":0},200)
+        }
+    })
+</script>
+</body>
+</html>

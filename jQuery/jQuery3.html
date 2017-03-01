@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>列表</title>
+    <style>
+        *{ margin: 0; padding: 0}
+        .left,.right{ background: #333; color: #fff; border: 1px solid #000; float: left;
+                width: 120px; height: 200px; cursor: pointer;}
+
+        .left ul li,.right ul li{ width: 120px; height: 30px;}
+
+        .left .choose{ background: #3388ff}
+
+        .btn-group{ float: left; width: 100px;}
+
+        .btn-group .add,.btn-group .reduce{ background: #3388ff; width: 80px;
+            height: 40px; line-height: 40px; text-align: center; margin: 20px auto; cursor: pointer;}
+
+
+    </style>
+</head>
+<body>
+    <div class="left">
+        <ul>
+            <li class="choose">里里小公举</li>
+            <li>洛洛</li>
+            <li>小哭包</li>
+            <li>小仙女</li>
+            <li>喝假酒的熊老师</li>
+        </ul>
+    </div>
+    <div class="btn-group">
+        <div class="add"> >> </div>
+        <div class="reduce"> << </div>
+    </div>
+    <div class="right">
+        <ul>
+            <li class="choose">总撩</li>
+            <li>泥石流</li>
+            <li>小葱</li>
+        </ul>
+    </div>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+        var index=-1;
+        var str;
+        $('.left li').click(function(){
+            //给index赋值当前点击的li的索引值
+            index=$(this).index();
+            str=$(this).text();
+            $(this).addClass('choose').siblings().removeClass('choose');
+        });
+
+        $('.right li').on('click',function(){
+            index=$(this).index();
+            str=$(this).text();
+            $(this).addClass('choose').siblings().removeClass('choose');
+        });
+
+        $('.add').click(function(){
+            if(index>=0){
+                $('.left li').eq(index).remove();
+                $('.right ul').append("<li>"+str+"</li>");
+                index=-1;
+            }else{
+                alert('请选择一项进行处理');
+            }
+        });
+
+        $('remove').click(function(){
+            if(index>=0){
+                $('.left li').eq(index).remove();
+                $('.right ul').append("<li>"+str+"</li>");
+                index=-1;
+            }else{
+                alert('请选择一项进行处理');
+            }
+        });
+    </script>
+</body>
+</html>
